@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Institutions Recruitment</title>
+</head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/layui/2.7.6/css/layui.min.css"
+      integrity="sha512-omRxviAbZbsRLmYjGYaOjLuafC5Jw17PYyg1eH4XaT5vWx+cOng6t+bq9VyjZBWrUuduYgYuIuD2d3MOz7S2dA=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/layui/2.7.6/layui.min.js"
+        integrity="sha512-jVlfkkRyCyrICx3iFs80jgim5Vmg2xVjAdBRCw/E/ZukJPYpjXfTyyiB1Y1gRsBeAC8CJ+jYIk0teYL4qV85gA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<body style="width: 1600px;margin: 2em auto auto auto">
+<div style="width: auto;">
+  <form class="layui-form" action="">
+    <input type="checkbox" name="computer" title="计算机"
+           {{if eq .computer "on"}}
+    checked
+    {{end}}
+    >
+    <input type="checkbox" name="architecture" title="土建"
+           {{if eq .architecture "on"}}
+    checked
+    {{end}}
+    >
+    <input type="checkbox" name="media" title="传媒"
+           {{if eq .media "on"}}
+    checked
+    {{end}}
+    >
+    总条数:{{.data.Total}}
+    <button class="layui-btn layui-btn-sm layui-btn-radius layui-btn-danger" type="submit">筛 选</button>
+    <a href="https://app.hrss.xm.gov.cn/syzp/v3/studentlogin.jsp" target="_blank" class="layui-btn layui-btn-sm layui-btn-radius layui-btn-normal" type="submit">报名链接</a>
+  </form>
+</div>
+<table class="layui-table" style="text-align: left;">
+  <thead>
+  <tr align="center">
+    <th>岗位代码</th>
+    <th>招聘单位</th>
+    <th>招聘岗位</th>
+    <th>拟聘人数</th>
+    <th>待审核人数</th>
+    <th>审核通过未缴费人数</th>
+    <th>审核通过已缴费人数</th>
+    <th>审核不通过人数</th>
+    <th>总报名人数</th>
+    <th>统计日期</th>
+    <th>查询详情</th>
+  </tr>
+  </thead>
+  <tbody>
+  {{$detailURL := .detailURL}}
+  {{range .data.Rows}}
+  <tr>
+    <td>{{.Postinfono}}</td>
+    <td>{{.Companyname}}</td>
+    <td>{{.Takejob}}</td>
+    <td>{{.Takenum}}</td>
+    <td>{{.Dshrs}}</td>
+    <td>{{.Shtgwjf}}</td>
+    <td>{{.Shtgyjf}}</td>
+    <td>{{.Shbtg}}</td>
+    <td>{{.Zbmrs}}</td>
+    <td>{{.Tjsj}}</td>
+    <td>
+      <a href="{{$detailURL}}{{.Postinfoid}}" target="_blank" class="layui-btn">查询岗位详情</a>
+    </td>
+  </tr>
+  {{end}}
+  </tbody>
+</table>
+</body>
+<script>
+  layui.use(['layer', 'form'], function () {
+    var layer = layui.layer;
+    var form = layui.form;
+  });
+</script>
+</html>
