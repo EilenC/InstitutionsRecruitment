@@ -121,7 +121,7 @@ func getList(totalURL string) (Rsp, error) {
 }
 
 func main() {
-	b, _ := ioutil.ReadFile("./data.json")
+	b, _ := ioutil.ReadFile("config/data.json")
 	_ = json.Unmarshal(b, &codes) //init config
 	r := gin.Default()
 	r.LoadHTMLFiles("./index.html")
