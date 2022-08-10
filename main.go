@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"html/template"
 	"io/ioutil"
 	"net/http"
 
@@ -124,6 +125,11 @@ func main() {
 	b, _ := ioutil.ReadFile("config/data.json")
 	_ = json.Unmarshal(b, &codes) //init config
 	r := gin.Default()
+	r.SetFuncMap(template.FuncMap{
+		"add": func(v int) int {
+			return v + 1
+		},
+	})
 	r.LoadHTMLFiles("./index.html")
 	r.StaticFS("/layui", http.Dir("./layui"))
 	r.GET("/", index)

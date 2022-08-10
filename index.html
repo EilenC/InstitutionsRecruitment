@@ -36,6 +36,7 @@
 <table class="layui-table" style="text-align: left;">
   <thead>
   <tr align="center">
+    <th>编号</th>
     <th>岗位代码</th>
     <th>招聘单位</th>
     <th>招聘岗位</th>
@@ -51,8 +52,9 @@
   </thead>
   <tbody>
   {{$detailURL := .detailURL}}
-  {{range .data.Rows}}
+  {{range $i,$v := .data.Rows}}
   <tr>
+    <td>{{add $i}}</td>
     <td>{{.Postinfono}}</td>
     <td>{{.Companyname}}</td>
     <td>{{.Takejob}}</td>
