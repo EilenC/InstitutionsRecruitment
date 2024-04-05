@@ -8,6 +8,7 @@ import (
 	"html/template"
 	"io/ioutil"
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/ysmood/got/lib/gop"
@@ -60,7 +61,9 @@ func index(c *gin.Context) {
 		ids = append(ids, codes[k]...)
 	}
 	gop.P(query)
-	totalURL := `https://app.hrss.xm.gov.cn/syzp/index/index/jobApply!findJobApplyTotal?&faid=10002789`
+	// totalURL := `https://app.hrss.xm.gov.cn/syzp/index/index/jobApply!findJobApplyTotal?&faid=10002789`
+	// totalURL := `https://app.hrss.xm.gov.cn/syzp/index/index/jobApply!findJobApplyTotal?&faid=10003091`
+	totalURL := `https://app.hrss.xm.gov.cn/syzp/index/index/jobApply!findJobApplyTotal?&faid=`+code
 	detailURL := `https://app.hrss.xm.gov.cn/syzp/index/postinfo!viewPostinfo4index?postinfoid=`
 	data, err := getList(totalURL)
 	if err != nil {
@@ -121,8 +124,15 @@ func getList(totalURL string) (Rsp, error) {
 	return data, nil
 }
 
+var code string
+
 func main() {
-	b, _ := ioutil.ReadFile("config/data.json")
+	if len(os.Args) != 2 {
+		fmt.Println("Pleasse set args code")
+		os.Exit(1)
+	}
+	code = os.Args[1]
+	b, _ := ioutil.ReadFile("config/data-"+code+".json")
 	_ = json.Unmarshal(b, &codes) //init config
 	r := gin.Default()
 	r.SetFuncMap(template.FuncMap{
